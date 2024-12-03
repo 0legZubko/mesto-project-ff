@@ -18,7 +18,7 @@ function renderCards() {
   });
 }
 
-function createCard({ name, link }, deleteCard) {
+function createCard({ name, link }) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate
     .querySelector('.places__item')
