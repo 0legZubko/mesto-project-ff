@@ -1,6 +1,9 @@
-import { hendleImagePopup } from '..';
-
-export function createCard({ name, link }) {
+export function createCard(
+  { name, link },
+  deleteCard,
+  likeCard,
+  hendleImagePopup
+) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate
     .querySelector('.places__item')
@@ -20,12 +23,4 @@ export function createCard({ name, link }) {
   cardImage.addEventListener('click', () => hendleImagePopup(link, name));
 
   return cardElement;
-}
-
-function deleteCard(cardElement) {
-  cardElement.remove();
-}
-
-function likeCard(likeButton) {
-  likeButton.classList.toggle('card__like-button_is-active');
 }

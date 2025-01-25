@@ -10,7 +10,7 @@ const editPopup = document.querySelector('.popup_type_edit');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const addPopup = document.querySelector('.popup_type_new-card');
-const closeButton = document.querySelectorAll('.popup__close');
+const closeButtons = document.querySelectorAll('.popup__close');
 
 const editForm = editPopup.querySelector('.popup__form');
 const nameInput = editPopup.querySelector('.popup__input_type_name');
@@ -19,7 +19,7 @@ const titleProfile = document.querySelector('.profile__title');
 const descriptionProfile = document.querySelector('.profile__description');
 const cardInputName = addPopup.querySelector('.popup__input_type_card-name');
 const cardInputLink = addPopup.querySelector('.popup__input_type_url');
-const popUp = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 
 const addForm = addPopup.querySelector('.popup__form');
 
@@ -29,7 +29,12 @@ const popupTitle = document.querySelector('.popup__caption');
 
 function renderCards() {
   initialCards.forEach(({ name, link }) => {
-    const card = createCard({ name, link });
+    const card = createCard(
+      { name, link },
+      deleteCard,
+      likeCard,
+      hendleImagePopup
+    );
     cardsContainer.append(card);
   });
 }
@@ -52,7 +57,7 @@ function handlePopupClose(event) {
   closeModal(popupElem);
 }
 
-popUp.forEach((overlay) => {
+popups.forEach((overlay) => {
   overlay.addEventListener('click', (event) => {
     if (
       !event.target.closest('.popup__content') &&
@@ -63,16 +68,24 @@ popUp.forEach((overlay) => {
   });
 });
 
-export function hendleImagePopup(link, name) {
+closeButtons.forEach((btn) => {
+  btn.addEventListener('click', handlePopupClose);
+});
+
+function deleteCard(cardElement) {
+  cardElement.remove();
+}
+
+function likeCard(likeButton) {
+  likeButton.classList.toggle('card__like-button_is-active');
+}
+
+function hendleImagePopup(link, name) {
   popupImage.src = link;
   popupImage.alt = name;
   popupTitle.textContent = name;
   openModal(imagePopup);
 }
-
-closeButton.forEach((btn) => {
-  btn.addEventListener('click', handlePopupClose);
-});
 
 function createNewCard(evt) {
   evt.preventDefault();
@@ -80,7 +93,12 @@ function createNewCard(evt) {
   const newCardName = cardInputName.value;
   const newCardLink = cardInputLink.value;
 
-  const newCardData = createCard({ name: newCardName, link: newCardLink });
+  const newCardData = createCard(
+    { name: newCardName, link: newCardLink },
+    deleteCard,
+    likeCard,
+    hendleImagePopup
+  );
   cardsContainer.prepend(newCardData);
   closeModal(addPopup);
   cardInputName.value = '';
