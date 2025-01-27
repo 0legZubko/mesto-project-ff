@@ -1,6 +1,6 @@
 import { initialCards } from './cards';
 import '../pages/index.css';
-import { createCard } from './components/card';
+import { createCard, deleteCard, likeCard } from './components/card';
 import { openModal, closeModal } from './components/modal';
 
 const container = document.querySelector('.content');
@@ -71,14 +71,6 @@ popups.forEach((overlay) => {
 closeButtons.forEach((btn) => {
   btn.addEventListener('click', handlePopupClose);
 });
-
-function deleteCard(cardElement) {
-  cardElement.remove();
-}
-
-function likeCard(likeButton) {
-  likeButton.classList.toggle('card__like-button_is-active');
-}
 
 function hendleImagePopup(link, name) {
   popupImage.src = link;

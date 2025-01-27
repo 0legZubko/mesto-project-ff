@@ -24,3 +24,11 @@ export function createCard(
 
   return cardElement;
 }
+
+export function deleteCard(cardElement) {
+  cardElement.remove();
+}
+
+export function likeCard(likeButton) {
+  likeButton.classList.toggle('card__like-button_is-active');
+}
