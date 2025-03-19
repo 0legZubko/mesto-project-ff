@@ -13,3 +13,16 @@
   position: relative;
   overflow: hidden;
 }
+
+.card__like {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.card__like-counter {
+  font-size: 13px;
+  line-height: 15.73px;
+}
