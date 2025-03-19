@@ -65,8 +65,6 @@ function renderCard(cardData) {
   cardsContainer.append(card);
 }
 
-let userId;
-
 Promise.all([getUserInfo(), getCards()])
   .then(([userData, cards]) => {
     profileImage.style.backgroundImage = `url('${userData.avatar}')`;
@@ -86,21 +84,6 @@ function hendleImagePopup(cardData) {
   popupImage.alt = cardData.name;
   popupTitle.textContent = cardData.name;
   openModal(imagePopup);
-}
-
-function deleteCard(event) {
-  event.preventDefault();
-
-  const cardId = popupConfirm.id;
-  deletePost(cardId)
-    .then(() => {
-      const cardElement = document.querySelector(`[id='${cardId}']`);
-      cardElement.remove();
-      closePopup(popupConfirm);
-    })
-    .catch((err) => {
-      console.log('Запрос не выполнен.', err);
-    });
 }
 
 addButton.addEventListener('click', () => {
@@ -162,6 +145,21 @@ function editProfile(event) {
 
 editForm.addEventListener('submit', editProfile);
 
+function deleteCard(event) {
+  event.preventDefault();
+
+  const cardId = popupConfirm.id;
+  deletePost(cardId)
+    .then(() => {
+      const cardElement = document.querySelector(`[id='${cardId}']`);
+      cardElement.remove();
+      closePopup(popupConfirm);
+    })
+    .catch((err) => {
+      console.log('Запрос не выполнен.', err);
+    });
+}
+
 profileImage.addEventListener('click', () => {
   avatarForm.reset();
   clearValidation(avatarForm, validationConfig);
@@ -186,24 +184,6 @@ function editAvatar(event) {
 }
 
 avatarForm.addEventListener('submit', editAvatar);
-
-// function createNewCard(evt) {
-//   evt.preventDefault();
-
-//   const newCardName = cardInputName.value;
-//   const newCardLink = cardInputLink.value;
-
-//   const newCardData = createCard(
-//     { name: newCardName, link: newCardLink },
-//     deleteCard,
-//     likeCard,
-//     hendleImagePopup
-//   );
-//   cardsContainer.prepend(newCardData);
-//   closeModal(addPopup);
-//   cardInputName.value = '';
-//   cardInputLink.value = '';
-// }
 
 function showLoading(saveButton) {
   saveButton.textContent = 'Сохранение...';
@@ -235,10 +215,3 @@ popups.forEach((overlay) => {
     }
   });
 });
-
-function handleFormSubmit(evt) {
-  evt.preventDefault();
-  titleProfile.textContent = nameInput.value;
-  descriptionProfile.textContent = jobInput.value;
-  closeModal(editPopup);
-}
