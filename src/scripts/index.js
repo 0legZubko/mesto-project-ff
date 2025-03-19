@@ -21,6 +21,8 @@ const addPopup = document.querySelector('.popup_type_new-card');
 const addCardSubmitButton = addPopup.querySelector('.popup__button');
 const profileSubmitButton = editPopup.querySelector('.popup__button');
 const closeButtons = document.querySelectorAll('.popup__close');
+const acceptPopup = document.querySelector('.popup__type_confirm');
+const acceptForm = acceptPopup.querySelector('.popup__form');
 
 const editForm = editPopup.querySelector('.popup__form');
 const nameInput = editPopup.querySelector('.popup__input_type_name');
@@ -57,7 +59,7 @@ enableValidation(validationConfig);
 function renderCard(cardData) {
   const newCard = createCard(
     cardData,
-    deleteCard,
+    openAcceptPopup,
     likeCard,
     hendleImagePopup,
     userId
@@ -145,15 +147,20 @@ function editProfile(event) {
 
 editForm.addEventListener('submit', editProfile);
 
+function openAcceptPopup(cardId) {
+  acceptForm.id = cardId;
+  openPopup(acceptPopup);
+}
+
 function deleteCard(event) {
   event.preventDefault();
 
-  const cardId = popupConfirm.id;
+  const cardId = acceptPopup.id;
   deletePost(cardId)
     .then(() => {
       const cardElement = document.querySelector(`[id='${cardId}']`);
       cardElement.remove();
-      closePopup(popupConfirm);
+      closePopup(acceptPopup);
     })
     .catch((err) => {
       console.log('Запрос не выполнен.', err);
