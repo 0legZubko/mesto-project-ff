@@ -55,14 +55,14 @@ const validationConfig = {
 enableValidation(validationConfig);
 
 function renderCard(cardData) {
-  const card = createCard(
+  const newCard = createCard(
     cardData,
     deleteCard,
     likeCard,
     hendleImagePopup,
     userId
   );
-  cardsContainer.append(card);
+  cardsContainer.append(newCard);
 }
 
 Promise.all([getUserInfo(), getCards()])
