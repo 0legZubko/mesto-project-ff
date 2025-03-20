@@ -167,6 +167,8 @@ function deleteCard(event) {
     });
 }
 
+acceptForm.addEventListener('submit', deleteCard);
+
 profileImage.addEventListener('click', () => {
   avatarForm.reset();
   clearValidation(avatarForm, validationConfig);

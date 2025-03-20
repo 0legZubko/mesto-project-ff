@@ -18,10 +18,10 @@
 .profile__image:hover::after {
   content: url('../../../images/avatar-icon.svg');
   background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   inset: 0;
   z-index: 1;
   cursor: pointer;
