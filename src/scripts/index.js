@@ -56,6 +56,8 @@ const validationConfig = {
 
 enableValidation(validationConfig);
 
+let userId = null;
+
 function renderCard(cardData) {
   const newCard = createCard(
     cardData,
@@ -64,18 +66,16 @@ function renderCard(cardData) {
     hendleImagePopup,
     userId
   );
-  cardsContainer.append(newCard);
+  cardsContainer.prepend(newCard);
 }
 
 Promise.all([getUserInfo(), getCards()])
   .then(([userData, cards]) => {
-    profileImage.style.backgroundImage = `url('${userData.avatar}')`;
-    profileName.textContent = userData.name;
-    profileJob.textContent = userData.about;
+    profileImage.src = userData.avatar;
+    titleProfile.textContent = userData.name;
+    descriptionProfile.textContent = userData.about;
     userId = userData['_id'];
-    cards.reverse().forEach((card) => {
-      renderCard(card);
-    });
+    cards.reverse().forEach(renderCard);
   })
   .catch((err) => {
     console.log('Запрос не выполнен.', err);
@@ -106,7 +106,7 @@ function addCard(event) {
   createPost(newPlace.name, newPlace.link)
     .then((data) => {
       renderCard(data);
-      closePopup(addPopup);
+      closeModal(addPopup);
     })
     .catch((err) => {
       console.log('Запрос не выполнен.', err);
@@ -148,19 +148,19 @@ function editProfile(event) {
 editForm.addEventListener('submit', editProfile);
 
 function openAcceptPopup(cardId) {
-  acceptForm.id = cardId;
-  openPopup(acceptPopup);
+  acceptForm.dataset.cardId = cardId;
+  openModal(acceptPopup);
 }
 
 function deleteCard(event) {
   event.preventDefault();
 
-  const cardId = acceptPopup.id;
+  const cardId = acceptForm.dataset.cardId;
   deletePost(cardId)
     .then(() => {
       const cardElement = document.querySelector(`[id='${cardId}']`);
       cardElement.remove();
-      closePopup(acceptPopup);
+      closeModal(acceptPopup);
     })
     .catch((err) => {
       console.log('Запрос не выполнен.', err);
@@ -181,7 +181,7 @@ function editAvatar(event) {
 
   setAvatar(avatarUrlInput.value)
     .then((data) => {
-      profileImage.style.backgroundImage = `url('${data.avatar}')`;
+      profileImage.src = data.avatar;
       closeModal(avatarPopup);
     })
     .catch((err) => {

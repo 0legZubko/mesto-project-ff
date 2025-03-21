@@ -14,7 +14,7 @@ function checkRes(res) {
 }
 
 export const getUserInfo = () => {
-  return fetch(`${config.baseUrl}/user/me`, {
+  return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
   }).then((res) => {
     return checkRes(res);

@@ -38,7 +38,7 @@ function checkInputValidity(formElem, inputElem, options) {
   }
 
   if (!inputElem.validity.valid) {
-    showInputError(formElem, inputElem, inputElem.validitationMessage, options);
+    showInputError(formElem, inputElem, inputElem.validationMessage, options);
   } else {
     hideInputError(formElem, inputElem, options);
   }
