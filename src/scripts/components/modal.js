@@ -15,3 +15,9 @@ function keyClosing(evt) {
     closeModal(openedPopup);
   }
 }
+
+export function handlePopupClose(event) {
+  const targetElem = event.target;
+  const popupElem = targetElem.closest('.popup_is-opened');
+  closeModal(popupElem);
+}

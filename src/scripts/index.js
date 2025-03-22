@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { createCard, likeCard } from './components/card';
-import { openModal, closeModal } from './components/modal';
+import { openModal, closeModal, handlePopupClose } from './components/modal';
 import { enableValidation, clearValidation } from './components/validation';
 import {
   getUserInfo,
@@ -134,6 +134,7 @@ function editProfile(event) {
       titleProfile.textContent = data.name;
       descriptionProfile.textContent = data.about;
       closeModal(editPopup);
+      editForm.reset();
     })
     .catch((err) => {
       console.log('Запрос не выполнен.', err);
@@ -141,8 +142,6 @@ function editProfile(event) {
     .finally(() => {
       hideLoading(profileSubmitButton);
     });
-
-  editForm.reset();
 }
 
 editForm.addEventListener('submit', editProfile);
@@ -207,12 +206,6 @@ function hideLoading(saveButton) {
 closeButtons.forEach((btn) => {
   btn.addEventListener('click', handlePopupClose);
 });
-
-function handlePopupClose(event) {
-  const targetElem = event.target;
-  const popupElem = targetElem.closest('.popup_is-opened');
-  closeModal(popupElem);
-}
 
 popups.forEach((overlay) => {
   overlay.addEventListener('click', (event) => {
